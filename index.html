@@ -1,71 +1,26 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#171811"><title>QuestWalk — The Big Red One</title>
-<link rel="manifest" href="manifest.webmanifest">
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>QuestWalk</title>
 <style>
-:root{--bg:#171811;--panel:#24251d;--line:#3b3c2f;--paper:#f2ead7;--muted:#aaa58f;--khaki:#b7a77a;--red:#9b3831}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--paper);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-main{max-width:680px;margin:auto;padding:calc(env(safe-area-inset-top) + 28px) 20px calc(env(safe-area-inset-bottom) + 40px)}
-.eyebrow,.label{color:var(--khaki);font-weight:800;letter-spacing:1.5px;font-size:12px}.hero{font-size:38px;line-height:.98;margin:8px 0;font-weight:900}.sub{color:var(--muted)}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:18px;margin:18px 0}.big{font-size:34px;font-weight:900;margin:8px 0}
-.bar{height:12px;background:#454638;border-radius:8px;overflow:hidden}.fill{height:100%;background:var(--khaki);width:0;transition:.4s}
-.paces,.buttons{display:flex;gap:8px;flex-wrap:wrap}.pace,button{border:0;color:var(--paper);background:#37382c;border-radius:999px;padding:10px 13px;font-weight:800}
-.pace.active{background:#655f43}.primary{display:block;width:100%;border-radius:12px;background:#7c2d28;padding:16px;margin-top:12px;font-size:15px}
-.secondary{display:block;width:100%;border-radius:12px;padding:16px;margin-top:10px}.demo button{flex:1;border-radius:10px}.route{margin-top:16px}
-.stop{display:flex;gap:13px;padding:15px 0;border-bottom:1px solid #34352a}.dot{width:15px;height:15px;border-radius:50%;background:#4a4b3e;margin-top:4px;flex:none}.dot.on{background:var(--red)}
-.stop h3{margin:0 0 3px;font-size:18px}.meta{color:var(--khaki);font-size:13px}.story{color:#c8c1ad;line-height:1.45;margin:8px 0 0}.locked{color:#747467}
-.screen{display:none}.screen.active{display:block}.back{padding:8px 0;background:none;color:var(--khaki)}
-.tag{font-size:10px;letter-spacing:1.2px;font-weight:900;color:var(--khaki)}.journal-card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;margin:12px 0}
-footer{text-align:center;color:#6f705f;font-size:12px;margin-top:25px}
-</style></head>
-<body><main>
-<section id="home" class="screen active">
-<div class="eyebrow">QUEST 001 · WWII</div><div class="hero">THE BIG<br>RED ONE</div>
-<div class="sub">Omaha Beach → Caumont · June 1944</div>
-<div class="card"><div class="label">CAMPAIGN PROGRESS</div><div class="big"><span id="campaign">0.0</span> <span style="font-size:16px;color:var(--muted)">/ 23 mi</span></div>
-<div class="bar"><div id="fill" class="fill"></div></div><p class="sub"><span id="pct">0</span>% complete · <span id="real">0.0</span> real miles</p></div>
-<div class="label">PACE</div><div class="paces" id="paces"></div>
-<div class="card"><div class="label">NEXT OBJECTIVE</div><h2 id="nextName">Beach Bluffs</h2><div class="sub" id="remaining"></div></div>
-<button class="primary" onclick="show('map')">OPEN CAMPAIGN MAP</button>
-<button class="secondary" onclick="show('journal')">FIELD JOURNAL</button>
-<div class="card demo"><div class="label">DEMO ACTIVITY</div><p class="sub">Use these to test progress from your iPhone.</p>
-<div class="buttons"><button onclick="add(.25)">+0.25 mi</button><button onclick="add(1)">+1 mi</button><button onclick="add(-1)">−1 mi</button></div></div>
-</section>
-<section id="map" class="screen"><button class="back" onclick="show('home')">← Back</button><div class="eyebrow">CHAPTER I</div><h1>Breakout from Omaha</h1><div class="sub">June 6–13, 1944 · 23 campaign miles</div><div class="route" id="route"></div></section>
-<section id="journal" class="screen"><button class="back" onclick="show('home')">← Back</button><h1>Field Journal</h1><div class="sub" id="journalCount"></div><div id="journalCards"></div></section>
-<footer>Early QuestWalk prototype · Route lines and intermediate mileage are historical reconstructions.</footer>
-</main>
+*{box-sizing:border-box}body{margin:0;background:#11130e;color:#eee5ce;font-family:Georgia,serif}.top{padding:32px 18px 15px;background:#10120e;border-bottom:1px solid #514831}.brand{font-size:26px;font-weight:bold}.sub{color:#c6a963;font:12px -apple-system,sans-serif;letter-spacing:1px}
+.map{min-height:650px;position:relative;overflow:hidden;background:linear-gradient(#3c5b59 0 19%,#9b9362 20%,#68754e 70%,#817655)}
+.map:after{content:"";position:absolute;inset:19% 0 0;opacity:.25;background:repeating-linear-gradient(25deg,transparent 0 22px,#303b24 23px 24px)}
+.card{position:absolute;z-index:2;top:20px;left:16px;right:16px;background:#dfc99a;color:#251e15;padding:15px;border:1px solid #856c46;box-shadow:0 5px 18px #0008}.card h1{margin:4px 0;font-size:25px}
+.bar{height:10px;background:#9a8965;border-radius:8px;overflow:hidden}.fill{height:100%;background:#49613a;width:0}.stats{display:flex;justify-content:space-between;font-weight:bold;font-size:12px;margin-top:7px}
+.route{position:absolute;z-index:2;top:35%;left:10%;right:10%;bottom:10%}.line{position:absolute;left:10%;top:5%;width:78%;height:75%;border-left:3px dashed #efe2bd;border-bottom:3px dashed #efe2bd;transform:skewY(15deg) rotate(-8deg);border-radius:0 0 0 60%}
+.pin{position:absolute;transform:translate(-50%,-50%);text-align:center}.pin button{width:36px;height:36px;border-radius:50%;border:3px solid #d5b04d;background:#292a22;color:#f3d56f;font-weight:bold}.pin.done button{background:#425e39;color:#fff}.pin.now button{box-shadow:0 0 0 7px #e5b93855,0 0 20px #e5b938}.pin label{display:block;background:#dbc69a;color:#271f15;padding:3px 6px;margin-top:3px;font-size:11px;font-weight:bold;white-space:nowrap}
+.bottom{padding:16px}.bottom b{font-size:21px}.muted{color:#a9a18c;font:13px -apple-system,sans-serif}.buttons{display:flex;gap:8px;margin-top:12px}.buttons button{flex:1;padding:12px;background:#34362b;color:white;border:1px solid #5a5544;border-radius:8px;font-weight:bold}
+.overlay{display:none;position:fixed;inset:0;z-index:10;background:#292318;padding:18px;overflow:auto}.overlay.on{display:block}.book{background:#ead8ae;color:#291f15;padding:22px;min-height:90vh;border:1px solid #876e48;box-shadow:0 4px 20px #0008}.book h1{text-align:center;margin-bottom:2px}.date{text-align:center;font-weight:bold}.art{height:210px;margin:18px 0;background:linear-gradient(#b9ad91,#737365);border:1px solid #8e8065;position:relative}.art:after{content:"FIELD SKETCH · NORMANDY";position:absolute;bottom:8px;right:8px;font-size:10px}.story{font-size:17px;line-height:1.5}.story:first-letter{float:left;font-size:55px;line-height:.8;color:#81382c;padding-right:7px}.tag{font:800 10px -apple-system,sans-serif;letter-spacing:1px;border:1px solid #796447;display:inline-block;padding:5px;margin-top:12px}.back{background:none;border:0;color:#e5c164;font-weight:bold;padding:0 0 12px}
+</style></head><body>
+<div class="top"><div class="brand">✦ QUESTWALK</div><div class="sub">NORMANDY 1944 · 1ST INFANTRY DIVISION</div></div>
+<div class="map"><div class="card"><div class="sub" style="color:#685638">QUEST 001 · WWII</div><h1>NORMANDY 1944</h1><div>Omaha Beach → Caumont</div><div class="bar"><div id="fill" class="fill"></div></div><div class="stats"><span id="miles"></span><span id="count"></span></div></div><div class="route"><div class="line"></div><div id="pins"></div></div></div>
+<div class="bottom"><div class="sub">NEXT OBJECTIVE</div><b id="next"></b><div id="remain" class="muted"></div><div class="buttons"><button onclick="add(.25)">+0.25 MI</button><button onclick="add(1)">+1 MI</button><button onclick="reset()">RESET</button></div></div>
+<div id="overlay" class="overlay"><button class="back" onclick="closeStory()">← RETURN TO MAP</button><div class="book"><div class="sub" style="text-align:center;color:#715b3b" id="num"></div><h1 id="name"></h1><div class="date" id="date"></div><div class="art"></div><div class="story" id="story"></div><div class="tag" id="tag"></div></div></div>
 <script>
-const stops=[
-["Omaha Beach","June 6, 1944",0,"DOCUMENTED","The journey begins on Omaha Beach with the 1st Infantry Division among the American assault forces."],
-["Beach Bluffs","June 6, 1944",.7,"APPROXIMATE","American troops push off the exposed beach and up the bluffs to establish a foothold."],
-["Colleville-sur-Mer","June 6, 1944",1.8,"DOCUMENTED","Elements of the 16th Infantry fight inland around Colleville-sur-Mer."],
-["Inland Beachhead","June 7, 1944",4,"INTERPOLATED","The beachhead expands as units consolidate and prepare to drive farther inland."],
-["Tour-en-Bessin Sector","June 8–9, 1944",7,"DOCUMENTED","The division fights for positions around Tour-en-Bessin as the Normandy lodgment grows."],
-["Normandy Bocage","June 9, 1944",9.5,"APPROXIMATE","Thick Norman hedgerows shape movement, visibility, and combat."],
-["Advance South","June 9–11, 1944",12,"APPROXIMATE","The division continues south toward the next objectives."],
-["Cerisy Forest Sector","June 11–12, 1944",16,"DOCUMENTED","The advance reaches the Cerisy Forest sector and Caumont becomes the next major objective."],
-["Approach to Caumont","June 12, 1944",20,"APPROXIMATE","The division closes on Caumont as resistance stiffens."],
-["Caumont-l'Éventé","June 13, 1944",23,"DOCUMENTED","Caumont is cleared, completing the prototype chapter from Omaha Beach."]
-];
-const paceDefs=[["Historical",1],["Campaign",2],["Adventure",5],["Discovery",10]];
-let real=Number(localStorage.qwReal||0), mult=Number(localStorage.qwMult||5);
-function campaign(){return Math.min(23,real*mult)}
-function save(){localStorage.qwReal=real;localStorage.qwMult=mult}
-function add(x){real=Math.max(0,real+x);save();render()}
-function setPace(x){mult=x;save();render()}
-function show(id){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');render();scrollTo(0,0)}
-function render(){
- let c=campaign(); document.getElementById('campaign').textContent=c.toFixed(1);document.getElementById('real').textContent=real.toFixed(1);
- document.getElementById('pct').textContent=Math.round(c/23*100);document.getElementById('fill').style.width=(c/23*100)+'%';
- document.getElementById('paces').innerHTML=paceDefs.map(p=>`<button class="pace ${p[1]===mult?'active':''}" onclick="setPace(${p[1]})">${p[0]} ${p[1]}×</button>`).join('');
- let next=stops.find(s=>s[2]>c);document.getElementById('nextName').textContent=next?next[0]:"Chapter Complete";
- document.getElementById('remaining').textContent=next?`${(next[2]-c).toFixed(1)} campaign miles remaining`:"Caumont reached.";
- document.getElementById('route').innerHTML=stops.map(s=>{let u=s[2]<=c;return `<div class="stop"><div class="dot ${u?'on':''}"></div><div><h3 class="${u?'':'locked'}">${u?s[0]:'Undiscovered location'}</h3><div class="meta">${s[2].toFixed(1)} mi · ${u?s[1]:'Locked'}</div>${u?`<p class="story">${s[4]}</p>`:''}</div></div>`}).join('');
- let unlocked=stops.filter(s=>s[2]<=c);document.getElementById('journalCount').textContent=`${unlocked.length} of ${stops.length} discoveries unlocked`;
- document.getElementById('journalCards').innerHTML=unlocked.map(s=>`<div class="journal-card"><div class="tag">${s[3]}</div><h2>${s[0]}</h2><div class="sub">${s[1]}</div><p class="story">${s[4]}</p></div>`).join('');
-}
-render();
+const S=[["Omaha Beach","June 6, 1944",0,"DOCUMENTED","The journey begins on Omaha Beach with the 1st Infantry Division among the American assault forces."],["Beach Bluffs","June 6, 1944",.7,"APPROXIMATE","Assault elements pushed off the exposed beach, through exits and up the bluffs while fighting continued around them."],["Colleville-sur-Mer","June 6, 1944",1.8,"DOCUMENTED","Elements of the 16th Infantry fought inland around Colleville-sur-Mer as the Omaha beachhead expanded."],["Inland Beachhead","June 7, 1944",4,"INTERPOLATED","The beachhead expanded as units consolidated and prepared to drive farther inland. This waypoint represents reconstructed campaign movement."],["Tour-en-Bessin","June 8–9, 1944",7,"DOCUMENTED","The division fought through the Tour-en-Bessin sector as Allied forces widened the Normandy lodgment."],["Normandy Bocage","June 9, 1944",9.5,"APPROXIMATE","Dense hedgerows restricted movement and visibility and gave defenders concealed positions."],["Advance South","June 9–11, 1944",12,"APPROXIMATE","The division continued south toward the next objectives beyond the initial beachhead."],["Cerisy Forest","June 11–12, 1944",16,"DOCUMENTED","The advance reached the Cerisy Forest sector, with Caumont becoming an important objective."],["Approach to Caumont","June 12, 1944",20,"APPROXIMATE","American forces closed on Caumont as resistance and difficult terrain continued to shape the advance."],["Caumont-l'Éventé","June 13, 1944",23,"DOCUMENTED","The prototype chapter concludes at Caumont-l'Éventé during the division's advance from Omaha Beach."]];
+const P=[[8,8],[18,20],[30,30],[41,40],[52,50],[62,60],[71,69],[80,78],[88,86],[95,94]];
+let real=Number(localStorage.qwRealV2||0), mult=5; function camp(){return Math.min(23,real*mult)} function save(){localStorage.qwRealV2=real}
+function add(x){real=Math.max(0,real+x);save();render()} function reset(){real=0;save();render()}
+function openStory(i){if(S[i][2]>camp())return;let s=S[i];num.textContent=`LOCATION ${i+1} OF ${S.length}`;name.textContent=s[0];date.textContent=s[1];story.textContent=s[4];tag.textContent=s[3]+" ROUTE EVIDENCE";overlay.classList.add("on")}
+function closeStory(){overlay.classList.remove("on")}
+function render(){let c=camp(),u=S.filter(s=>s[2]<=c),n=S.find(s=>s[2]>c);fill.style.width=(c/23*100)+"%";miles.textContent=c.toFixed(1)+" / 23 MI";count.textContent=u.length+" / 10 LOCATIONS";next.textContent=n?n[0]:"CHAPTER COMPLETE";remain.textContent=n?(n[2]-c).toFixed(1)+" campaign miles remaining":"Caumont reached.";
+pins.innerHTML=S.map((s,i)=>{let d=s[2]<=c,now=d&&(!S[i+1]||S[i+1][2]>c);return `<div class="pin ${d?'done':''} ${now?'now':''}" style="left:${P[i][0]}%;top:${P[i][1]}%"><button onclick="openStory(${i})">${d?(now?'★':'✓'):'🔒'}</button><label>${d?s[0]:'???'}</label></div>`}).join("")} render();
 </script></body></html>
